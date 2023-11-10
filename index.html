@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SnakeMania Menu</title>
+    <style>
+        body{
+    background: url("../img/bg.jpg"); 
+
+        }
+        .main-body{
+            width: 100%;
+            height: 98vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+        }
+        .main-menu{
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        button{
+            padding: 30px;
+            font-size: 45px;
+            font-weight: 600;
+            min-width: 250px;
+            border: none;
+            border-radius: 20px;
+            transition: all .1s ease-in;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            cursor: pointer;
+            background: url("img/pngegg.png");
+            background:rgba(46, 139, 86, 0.384);
+
+        }
+        button:active{
+            scale:1.2;
+            color: rgb(119, 53, 53);    
+        }
+        button:hover{
+            scale: 1.1;
+        }
+        .play-btn{
+            color: yellow;
+            font-style: italic;
+            font-family:cursive;
+        }
+        .dn{
+            display: none;
+
+        }
+        .Settings{
+            position: relative;
+            flex-direction: column;
+            gap: 100px;
+        }
+        .df{
+            display: flex;
+        }
+        .slider{
+            display: flex;
+            position: relative;
+            gap: 20px;
+            font-size: 30px;
+            justify-content: center;
+            min-width: 400px;
+        }
+        .slider h2,.slider h3{
+            margin: 0px;
+        }
+        .slider input{
+            /* padding: 20px;. */
+            font-size: large;
+        
+        }
+    </style>
+</head>
+<body>
+    <div class="main-body">
+        <div class="main-menu" id="mm">
+            <div><button class="play-btn" onclick="play()">Play</button></div>
+            <div><button onclick="settings()">Settings</button></div>
+            <div><button>Kuch Bhi</button></div>
+        </div>
+        <div class="Settings dn" id="Settings">
+            <div class="slider" >
+                <h2>Difficulty</h2>
+                <input type="range" max="3" min="1"  id="d" onchange="changeD(this)">
+                <h3 id="df"> </h3>
+            </div>
+            <div class="slider">
+                <h2>Sound
+                </h2>
+                <input type="range" max="100" min="1"  id="s" onchange="changeS(this)">
+                <h1 id="sound"></h1>
+            </div>
+            <div class="slider">
+                <h2>Music</h2>
+                <input type="range"  max="100" min="1"  id="m" onchange="changeM(this)">
+                <h1 id="music"></h1>
+            </div>
+        </div>
+
+    </div>
+    <script>
+        let d =document.getElementById('d');
+        let s =document.getElementById('s');
+        let m =document.getElementById('m');
+        let stn = false;
+        
+
+        function setLS(){
+            if(localStorage.getItem('difficulty')==null){
+            localStorage.setItem("difficulty","1")
+            localStorage.setItem("Sound","1")
+            localStorage.setItem("Music","1")
+            }
+            d.value= localStorage.getItem('difficulty')
+            s.value= localStorage.getItem('Sound')
+            m.value= localStorage.getItem('Music')
+
+        }
+        setLS()
+        function play(){
+            window.location='Game.html';
+        }
+
+        function settings(){
+            let setting = document.getElementById('Settings')
+            let menu = document.getElementById('mm')
+            setting.classList.toggle('dn')
+            setting.classList.toggle('df')
+            stn = true;
+            menu.classList.toggle('dn')
+            window.addEventListener('keydown',(e)=>{
+                if(stn === true ){
+                if(e.key === "Escape"){
+                    console.log("first")
+                menu.classList.toggle('dn')
+                setting.classList.toggle('dn')
+                setting.classList.toggle('df')
+                stn = false;
+                }                
+            }
+          })
+        }
+
+        function changeD(e){
+            let value = e.value
+            localStorage.setItem("difficulty",value.toString())
+        }
+        function changeS(e){
+            let value = e.value
+            localStorage.setItem("Sound",value.toString())
+        }
+        function changeM(e){
+            let value = e.value
+            localStorage.setItem("Music",value.toString())
+        }
+    </script>
+</body>
+</html>
